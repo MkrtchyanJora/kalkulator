@@ -1,23 +1,45 @@
-import logo from './logo.svg';
+import React, { useReducer } from 'react';
 import './App.css';
+import reduser from './Components/reduser'
+import KalkItems from './Components/KalkItems';
+
 
 function App() {
+  const [state, dispatch] = useReducer(reduser, '')
+
+  const hendelClick = (e) => {
+    dispatch({
+      type: 'add',
+      payload: state.concat(e.target.name)
+    })
+
+  }
+
+  const back = () => {
+    dispatch({
+      type: 'back',
+      payload: state.slice(0, state.length - 1)
+    })
+  }
+
+  const resultat = () => {
+    dispatch({
+      type: 'result',
+      payload: eval(state).toString()
+    })
+  }
+
+
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+    <div className="contener">
+
+      <input type='text' value={state} />
+
+
+      <KalkItems hendelClick={hendelClick} back={back} resultat={resultat} />
     </div>
   );
 }
